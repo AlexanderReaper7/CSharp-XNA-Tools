@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tools_collision", "Tools_collision\Tools_collision\Tools_collision.csproj", "{2F1E5AA6-D390-4FA0-B992-0C8E7120991B}"
+EndProject
+Project("{96E2B04D-8817-42C6-938A-82C39BA4D311}") = "Tools_collisionContent", "Tools_collision\Tools_collisionContent\Tools_collisionContent.contentproj", "{5B76559C-7DE3-4A29-8B97-9B3527C99AD8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2F1E5AA6-D390-4FA0-B992-0C8E7120991B}.Debug|x86.ActiveCfg = Debug|x86
+		{2F1E5AA6-D390-4FA0-B992-0C8E7120991B}.Debug|x86.Build.0 = Debug|x86
+		{2F1E5AA6-D390-4FA0-B992-0C8E7120991B}.Release|x86.ActiveCfg = Release|x86
+		{2F1E5AA6-D390-4FA0-B992-0C8E7120991B}.Release|x86.Build.0 = Release|x86
+		{5B76559C-7DE3-4A29-8B97-9B3527C99AD8}.Debug|x86.ActiveCfg = Debug|x86
+		{5B76559C-7DE3-4A29-8B97-9B3527C99AD8}.Release|x86.ActiveCfg = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
