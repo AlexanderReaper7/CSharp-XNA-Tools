@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlexanderTest01", "AlexanderTest01\AlexanderTest01\AlexanderTest01.csproj", "{AFC126BA-21F7-4187-B511-FA77C4FEE0A6}"
+EndProject
+Project("{96E2B04D-8817-42C6-938A-82C39BA4D311}") = "AlexanderTest01Content", "AlexanderTest01\AlexanderTest01Content\AlexanderTest01Content.contentproj", "{F624B471-59EA-454C-BA4A-05D1E26F5DDB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AFC126BA-21F7-4187-B511-FA77C4FEE0A6}.Debug|x86.ActiveCfg = Debug|x86
+		{AFC126BA-21F7-4187-B511-FA77C4FEE0A6}.Debug|x86.Build.0 = Debug|x86
+		{AFC126BA-21F7-4187-B511-FA77C4FEE0A6}.Release|x86.ActiveCfg = Release|x86
+		{AFC126BA-21F7-4187-B511-FA77C4FEE0A6}.Release|x86.Build.0 = Release|x86
+		{F624B471-59EA-454C-BA4A-05D1E26F5DDB}.Debug|x86.ActiveCfg = Debug|x86
+		{F624B471-59EA-454C-BA4A-05D1E26F5DDB}.Release|x86.ActiveCfg = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
