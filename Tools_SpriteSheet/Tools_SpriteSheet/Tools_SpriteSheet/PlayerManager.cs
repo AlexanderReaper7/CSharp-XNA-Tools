@@ -13,11 +13,11 @@ namespace Tools_SpriteSheet
         // Sprite
         Texture2D playerSprite;
         float timer = 0f;
-        float interval = 200f;
-        int currentFrame = 0;
+        readonly float interval = 200f;
+        int currentFrame;
         int spriteWidth = 32;
         int spriteHeight = 48;
-        int spriteSpeed = 2;
+        readonly int spriteSpeed = 2;
         Rectangle sourceRect;
         Vector2 position;
         Vector2 velocity;
@@ -49,7 +49,7 @@ namespace Tools_SpriteSheet
             set { sourceRect = value; }
         }
 
-        public PlayerManager(Texture2D texture, int currentFrame, int spriteWidth, int spriteheight)
+        public PlayerManager(Texture2D texture, int currentFrame, int spriteWidth, int spriteheight) // Controlls what´s allowed as input
         {
             this.playerSprite = texture;
             this.currentFrame = currentFrame;
@@ -63,7 +63,7 @@ namespace Tools_SpriteSheet
             currentKBState = Keyboard.GetState(); // Renews keyboard state
 
             sourceRect = new Rectangle(currentFrame * spriteWidth, 0, spriteWidth, spriteHeight);
-
+            // makes player stop animating and setting currentFrame to the approriet frame when all keys are released
             if (currentKBState.GetPressedKeys().Length == 0)
             {
                 if (currentFrame > 0 && currentFrame < 4)
@@ -121,16 +121,16 @@ namespace Tools_SpriteSheet
 
         public void AnimateRight(GameTime gametime)
         {
-            if (currentKBState != previousKBState)
+            if (currentKBState != previousKBState) // if new KBState, return to idle frame for the specific direction
             {
-                currentFrame = 9;
+                currentFrame = 9;  // Idle frame
             }
 
             timer += (float)gametime.ElapsedGameTime.TotalMilliseconds;
 
             if (timer > interval)
             {
-                currentFrame++;
+                currentFrame++; // Next frame
 
                 if (currentFrame > 11)
                 {
@@ -142,16 +142,16 @@ namespace Tools_SpriteSheet
 
         public void AnimateUp(GameTime gametime)
         {
-            if (currentKBState != previousKBState)
+            if (currentKBState != previousKBState) // if new KBState, return to idle frame for the specific direction
             {
-                currentFrame = 13;
+                currentFrame = 13; // Idle frame
             }
 
             timer += (float)gametime.ElapsedGameTime.TotalMilliseconds;
 
             if (timer > interval)
             {
-                currentFrame++;
+                currentFrame++; // Next frame
 
                 if (currentFrame > 15)
                 {
@@ -163,16 +163,16 @@ namespace Tools_SpriteSheet
 
         public void AnimateDown(GameTime gametime)
         {
-            if (currentKBState != previousKBState)
+            if (currentKBState != previousKBState) // if new KBState, return to idle frame for the specific direction
             {
-                currentFrame = 1;
+                currentFrame = 1; // Idle frame
             }
 
             timer += (float)gametime.ElapsedGameTime.TotalMilliseconds;
 
             if (timer > interval)
             {
-                currentFrame++;
+                currentFrame++; // Next frame
 
                 if (currentFrame > 3)
                 {
@@ -184,16 +184,16 @@ namespace Tools_SpriteSheet
 
         public void AnimateLeft(GameTime gametime)
         {
-            if (currentKBState != previousKBState)
+            if (currentKBState != previousKBState) // if new KBState, return to idle frame for the specific direction
             {
-                currentFrame = 5;
+                currentFrame = 5; // Idle frame
             }
 
             timer += (float)gametime.ElapsedGameTime.TotalMilliseconds;
 
             if (timer > interval)
             {
-                currentFrame++;
+                currentFrame++; // Next frame
 
                 if (currentFrame > 7)
                 {

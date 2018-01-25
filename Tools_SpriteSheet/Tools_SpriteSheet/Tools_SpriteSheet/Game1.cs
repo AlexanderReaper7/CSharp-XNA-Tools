@@ -45,13 +45,11 @@ namespace Tools_SpriteSheet
         /// </summary>
         protected override void LoadContent()
         {
-            // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             spriteSheet = Content.Load<Texture2D>(@"Images/spriteSheet");
             playerSprite = new PlayerManager(Content.Load<Texture2D>(@"Images/spriteSheet"), 1, 32, 48);
 
             playerSprite.Position = new Vector2(400, 300); // Player starting position
-            // TODO: use this.Content to load your game content here
         }
 
         /// <summary>
@@ -70,12 +68,13 @@ namespace Tools_SpriteSheet
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            // Allows the game to exit
             GamePadState gamepad = GamePad.GetState(PlayerIndex.One);
             KeyboardState keyboard = Keyboard.GetState();
             //back or escape exits the game
             if (gamepad.Buttons.Back == ButtonState.Pressed || keyboard.IsKeyDown(Keys.Escape))
+            {
                 this.Exit();
+            }
 
             playerSprite.HandleSpriteMovment(gameTime); // Player movment
 
@@ -90,7 +89,7 @@ namespace Tools_SpriteSheet
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
             spriteBatch.Begin();
-            spriteBatch.Draw(playerSprite.Texture, playerSprite.Position, playerSprite.SourceRect, Color.White);
+            spriteBatch.Draw(playerSprite.Texture, playerSprite.Position, playerSprite.SourceRect, Color.White); // Player
             spriteBatch.End();
             base.Draw(gameTime);
         }
