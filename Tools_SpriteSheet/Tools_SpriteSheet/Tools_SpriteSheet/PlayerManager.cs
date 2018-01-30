@@ -63,7 +63,7 @@ namespace Tools_SpriteSheet
             currentKBState = Keyboard.GetState(); // Renews keyboard state
 
             sourceRect = new Rectangle(currentFrame * spriteWidth, 0, spriteWidth, spriteHeight);
-            // makes player stop animating and setting currentFrame to the approriet frame when all keys are released
+            // makes player stop animating and set currentFrame to the approriet frame when all keys are released
             if (currentKBState.GetPressedKeys().Length == 0)
             {
                 if (currentFrame > 0 && currentFrame < 4)
