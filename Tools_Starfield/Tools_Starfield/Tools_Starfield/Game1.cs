@@ -34,7 +34,6 @@ namespace Tools_Starfield
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
 
             base.Initialize();
         }
@@ -48,9 +47,9 @@ namespace Tools_Starfield
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            mixedSprites = Content.Load<Texture2D>(@"Images/Mixed");
+            mixedSprites = Content.Load<Texture2D>(@"SpriteSheet");
 
-            starfield = new Starfield(this.Window.ClientBounds.Width, this.Window.ClientBounds.Height, 200, new Vector2(0, 30f), mixedSprites, new Rectangle(0, 450, 2, 2));
+            starfield = new Starfield(this.Window.ClientBounds.Width, this.Window.ClientBounds.Height, 200, new Vector2(0, 30f), mixedSprites, new Rectangle(0, 48, 2, 2));
         }
 
         /// <summary>
@@ -76,6 +75,8 @@ namespace Tools_Starfield
             {
                 this.Exit();
             }
+
+
 
             base.Update(gameTime);
         }
