@@ -18,6 +18,8 @@ namespace Tools_Starfield
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        Starfield starfield;
+        Texture2D mixedSprites;
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -45,8 +47,10 @@ namespace Tools_Starfield
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            
-            // TODO: use this.Content to load your game content here
+
+            mixedSprites = Content.Load<Texture2D>(@"Images/Mixed");
+
+            starfield = new Starfield(this.Window.ClientBounds.Width, this.Window.ClientBounds.Height, 200, new Vector2(0, 30f), mixedSprites, new Rectangle(0, 450, 2, 2));
         }
 
         /// <summary>
