@@ -15,7 +15,7 @@ namespace Tools_Starfield
         private Random rand = new Random();
         private Color[] colors = { Color.White, Color.Yellow, Color.Wheat, Color.WhiteSmoke, Color.SlateGray, };
    
-        public Starfield(int screenWidth, int screenHeight, int starCount, Vector2 starVelocity, Texture2D texture, Rectangle frameRectangle)
+        public Starfield(int screenWidth, int screenHeight, int starCount, Vector2 starVelocity, Texture2D texture, Rectangle frameRectangle) // whats allowed input
         {
             this.screenWidth = screenWidth;
             this.screenHeight = screenHeight;

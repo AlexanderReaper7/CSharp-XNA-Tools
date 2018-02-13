@@ -29,7 +29,7 @@ namespace Tools_Starfield
 
         protected List<Rectangle> frames = new List<Rectangle>();
 
-        public Sprite(Vector2 position, Texture2D texture, Rectangle initialFrame, Vector2 velocity)
+        public Sprite(Vector2 position, Texture2D texture, Rectangle initialFrame, Vector2 velocity) // whats allowed as input
         {
             this.position = position;
             Texture = texture;

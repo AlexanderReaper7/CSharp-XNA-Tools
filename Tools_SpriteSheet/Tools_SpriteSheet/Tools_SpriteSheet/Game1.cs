@@ -20,6 +20,8 @@ namespace Tools_SpriteSheet
         SpriteBatch spriteBatch;
         PlayerManager playerSprite;
         Texture2D spriteSheet;
+        Starfield starField;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);

@@ -19,7 +19,9 @@ namespace Tools_Starfield
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Starfield starfield;
+        PlayerManager playerSprite;
         Texture2D mixedSprites;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -46,10 +48,15 @@ namespace Tools_Starfield
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
+            // Star texture(alias)
             mixedSprites = Content.Load<Texture2D>(@"SpriteSheet");
-
+            // Star particles
             starfield = new Starfield(this.Window.ClientBounds.Width, this.Window.ClientBounds.Height, 200, new Vector2(0, 30f), mixedSprites, new Rectangle(0, 48, 2, 2));
+            // Player Sprite
+            playerSprite = new PlayerManager(Content.Load<Texture2D>(@"SpriteSheet"), 1, 32, 48);
+            // Player starting position
+            playerSprite.Position = new Vector2(400, 300);
+
         }
 
         /// <summary>
@@ -70,12 +77,15 @@ namespace Tools_Starfield
         {
             GamePadState gamepad = GamePad.GetState(PlayerIndex.One);
             KeyboardState keyboard = Keyboard.GetState();
-            //back or escape exits the game
+            // Back or escape exits the game
             if (gamepad.Buttons.Back == ButtonState.Pressed || keyboard.IsKeyDown(Keys.Escape))
             {
                 this.Exit();
             }
-
+            // Starfield
+            starfield.Update(gameTime);
+            // Player movement
+            playerSprite.HandleSpriteMovement(gameTime);
 
 
             base.Update(gameTime);
@@ -87,9 +97,12 @@ namespace Tools_Starfield
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Black);
 
-            // TODO: Add your drawing code here
+            spriteBatch.Begin();
+            starfield.Draw(spriteBatch);
+            spriteBatch.Draw(playerSprite.Texture, playerSprite.Position, playerSprite.SourceRect, Color.White);
+            spriteBatch.End();
 
             base.Draw(gameTime);
         }
