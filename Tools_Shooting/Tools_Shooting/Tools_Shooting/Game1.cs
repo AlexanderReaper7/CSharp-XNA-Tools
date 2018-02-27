@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 
-namespace Tools_Starfield
+namespace Tools_Shooting
 {
     /// <summary>
     /// This is the main type for your game
@@ -18,9 +18,6 @@ namespace Tools_Starfield
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        Starfield starfield;
-        PlayerManager playerSprite;
-        Texture2D mixedSprites;
 
         public Game1()
         {
@@ -36,6 +33,7 @@ namespace Tools_Starfield
         /// </summary>
         protected override void Initialize()
         {
+            // TODO: Add your initialization logic here
 
             base.Initialize();
         }
@@ -48,16 +46,8 @@ namespace Tools_Starfield
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            // Star texture(alias)
-            mixedSprites = Content.Load<Texture2D>(@"SpriteSheet");
-            // Window size
-            Rectangle screenBounds = new Rectangle(0, 0, this.Window.ClientBounds.Width, this.Window.ClientBounds.Height);
-            // Star particles
-            starfield = new Starfield(this.Window.ClientBounds.Width, this.Window.ClientBounds.Height, 200, new Vector2(0, 30f), mixedSprites, new Rectangle(0, 48, 2, 2));
-            // Player Sprite
-            playerSprite = new PlayerManager(Content.Load<Texture2D>(@"SpriteSheet"), 1, 32, 48, screenBounds);
-            // Player starting position
-            playerSprite.Position = new Vector2(400, 300);
+
+            // TODO: use this.Content to load your game content here
         }
 
         /// <summary>
@@ -76,18 +66,11 @@ namespace Tools_Starfield
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            GamePadState gamepad = GamePad.GetState(PlayerIndex.One);
-            KeyboardState keyboard = Keyboard.GetState();
-            // Back or escape exits the game
-            if (gamepad.Buttons.Back == ButtonState.Pressed || keyboard.IsKeyDown(Keys.Escape))
-            {
+            // Allows the game to exit
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
-            }
-            // Starfield
-            starfield.Update(gameTime);
-            // Player movement
-            playerSprite.HandleSpriteMovement(gameTime);
-            playerSprite.update(gameTime);
+
+            // TODO: Add your update logic here
 
             base.Update(gameTime);
         }
@@ -98,13 +81,9 @@ namespace Tools_Starfield
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.Black);
+            GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            spriteBatch.Begin();
-            starfield.Draw(spriteBatch);
-            playerSprite.Draw(spriteBatch);
-            spriteBatch.Draw(playerSprite.Texture, playerSprite.Position, playerSprite.SourceRect, Color.White);
-            spriteBatch.End();
+            // TODO: Add your drawing code here
 
             base.Draw(gameTime);
         }

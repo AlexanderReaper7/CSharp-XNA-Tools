@@ -26,6 +26,12 @@ namespace Tools_Starfield
         // Controll
         KeyboardState currentKBState;
         KeyboardState previousKBState;
+        // Shooting vars
+        private Vector2 gunOffset = new Vector2(25, 10);
+        private float shotTimer = 0.0f;
+        private float minShotTimer = 0.2f;
+        public Shooting PlayerShotManager;
+        Rectangle screenBounds;
 
         public Vector2 Position
         {
@@ -51,12 +57,15 @@ namespace Tools_Starfield
             set { sourceRect = value; }
         }
 
-        public PlayerManager(Texture2D texture, int currentFrame, int spriteWidth, int spriteheight) // Controlls what´s allowed as input
+        public PlayerManager(Texture2D texture, int currentFrame, int spriteWidth, int spriteheight, Rectangle screenBounds) // Controlls what´s allowed as input
         {
             this.playerSprite = texture;
             this.currentFrame = currentFrame;
             this.spriteWidth = spriteWidth;
             this.spriteHeight = spriteHeight;
+            this.screenBounds = screenBounds;
+
+            PlayerShotManager = new Shooting(texture, new Rectangle(0, 300, 5, 5), 4, 2, 250f, screenBounds);
         }
 
         public void HandleSpriteMovement(GameTime gametime)
@@ -72,19 +81,23 @@ namespace Tools_Starfield
                 {
                     currentFrame = 0;
                 }
+
                 if (currentFrame > 4 && currentFrame < 8)
                 {
                     currentFrame = 4;
                 }
+
                 if (currentFrame > 8 && currentFrame < 12)
                 {
                     currentFrame = 8;
                 }
+
                 if (currentFrame > 12 && currentFrame < 16)
                 {
                     currentFrame = 12;
                 }
             }
+
             if (currentKBState.IsKeyDown(Keys.Right))
             {
                 AnimateRight(gametime);
@@ -93,6 +106,7 @@ namespace Tools_Starfield
                     position.X += spriteSpeed;
                 }
             }
+
             if (currentKBState.IsKeyDown(Keys.Left))
             {
                 AnimateLeft(gametime);
@@ -101,6 +115,7 @@ namespace Tools_Starfield
                     position.X -= spriteSpeed;
                 }
             }
+
             if (currentKBState.IsKeyDown(Keys.Down))
             {
                 AnimateDown(gametime);
@@ -109,6 +124,7 @@ namespace Tools_Starfield
                     position.Y += spriteSpeed;
                 }
             }
+
             if (currentKBState.IsKeyDown(Keys.Up))
             {
                 AnimateUp(gametime);
@@ -117,8 +133,21 @@ namespace Tools_Starfield
                     position.Y -= spriteSpeed;
                 }
             }
+            if (currentKBState.IsKeyDown(Keys.Space))
+            {
+                FireShot();
+            }
 
             velocity = new Vector2(sourceRect.Width / 2, sourceRect.Height / 2); // Not used for anything
+        }
+
+        private void FireShot()
+        {
+            if (shotTimer >= minShotTimer)
+            {
+                PlayerShotManager.FireShot(position + gunOffset, new Vector2(0, -1), true);
+                shotTimer = 0.0f;
+            }
         }
 
         public void AnimateRight(GameTime gametime)
@@ -205,5 +234,15 @@ namespace Tools_Starfield
             }
         }
 
+        public void update(GameTime gameTime)
+        {
+            PlayerShotManager.Update(gameTime);
+            shotTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+        }
+
+        public void Draw(SpriteBatch spritebatch)
+        {
+            PlayerShotManager.Draw(spritebatch);
+        }
     }
 }

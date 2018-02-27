@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tools_Shooting", "Tools_Shooting\Tools_Shooting\Tools_Shooting.csproj", "{565C0F5E-692B-4C3E-8610-3B1B3FC44571}"
+EndProject
+Project("{96E2B04D-8817-42C6-938A-82C39BA4D311}") = "Tools_ShootingContent", "Tools_Shooting\Tools_ShootingContent\Tools_ShootingContent.contentproj", "{076743C4-8489-46A8-81B2-519F67E3A265}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{565C0F5E-692B-4C3E-8610-3B1B3FC44571}.Debug|x86.ActiveCfg = Debug|x86
+		{565C0F5E-692B-4C3E-8610-3B1B3FC44571}.Debug|x86.Build.0 = Debug|x86
+		{565C0F5E-692B-4C3E-8610-3B1B3FC44571}.Release|x86.ActiveCfg = Release|x86
+		{565C0F5E-692B-4C3E-8610-3B1B3FC44571}.Release|x86.Build.0 = Release|x86
+		{076743C4-8489-46A8-81B2-519F67E3A265}.Debug|x86.ActiveCfg = Debug|x86
+		{076743C4-8489-46A8-81B2-519F67E3A265}.Release|x86.ActiveCfg = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
