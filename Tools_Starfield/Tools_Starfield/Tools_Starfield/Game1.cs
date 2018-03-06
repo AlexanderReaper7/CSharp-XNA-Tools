@@ -21,6 +21,7 @@ namespace Tools_Starfield
         Starfield starfield;
         PlayerManager playerSprite;
         Texture2D mixedSprites;
+        EnemyManager enemyManager;
 
         public Game1()
         {
@@ -58,6 +59,8 @@ namespace Tools_Starfield
             playerSprite = new PlayerManager(Content.Load<Texture2D>(@"SpriteSheet"), 1, 32, 48, screenBounds);
             // Player starting position
             playerSprite.Position = new Vector2(400, 300);
+            // 
+            enemyManager = new EnemyManager(mixedSprites, new Rectangle(0, 200, 50, 50), 6, playerSprite, screenBounds);
         }
 
         /// <summary>
@@ -88,6 +91,7 @@ namespace Tools_Starfield
             // Player movement
             playerSprite.HandleSpriteMovement(gameTime);
             playerSprite.update(gameTime);
+            enemyManager.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -103,6 +107,7 @@ namespace Tools_Starfield
             spriteBatch.Begin();
             starfield.Draw(spriteBatch);
             playerSprite.Draw(spriteBatch);
+            enemyManager.draw(spriteBatch);
             spriteBatch.Draw(playerSprite.Texture, playerSprite.Position, playerSprite.SourceRect, Color.White);
             spriteBatch.End();
 
