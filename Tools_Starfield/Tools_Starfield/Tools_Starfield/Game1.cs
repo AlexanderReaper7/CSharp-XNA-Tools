@@ -23,6 +23,7 @@ namespace Tools_Starfield
         Texture2D mixedSprites;
         EnemyManager enemyManager;
         CollisionsManager collisionManager;
+        ExplosionManager explosionManager;
 
         public Game1()
         {
@@ -61,9 +62,10 @@ namespace Tools_Starfield
             // Player starting position
             playerSprite.Position = new Vector2(400, 300);
             // 
-            enemyManager = new EnemyManager(mixedSprites, new Rectangle(0, 200, 50, 50), 6, playerSprite, screenBounds);
+            enemyManager = new EnemyManager(mixedSprites, new Rectangle(1, 32, 48, 50), 6, playerSprite, screenBounds);
             //
             collisionManager = new CollisionsManager(playerSprite, enemyManager);
+            explosionManager = new ExplosionManager(mixedSprites, new Rectangle(0, 100, 50, 50), 3, new Rectangle(0, 450, 2, 2));
         }
 
         /// <summary>
@@ -85,7 +87,7 @@ namespace Tools_Starfield
             GamePadState gamepad = GamePad.GetState(PlayerIndex.One);
             KeyboardState keyboard = Keyboard.GetState();
             // Back or escape exits the game
-            if (gamepad.Buttons.Back == ButtonState.Pressed || keyboard.IsKeyDown(Keys.Escape))
+            if (gamepad.Buttons.Back == ButtonState.Pressed || keyboard.IsKeyDown(Keys.End))
             {
                 this.Exit();
             }
@@ -94,8 +96,11 @@ namespace Tools_Starfield
             // Player movement
             playerSprite.HandleSpriteMovement(gameTime);
             playerSprite.update(gameTime);
+            // Enemy
             enemyManager.Update(gameTime);
+            // Hitbox
             collisionManager.CheckCollisions();
+            explosionManager.update(gameTime);
 
             base.Update(gameTime);
         }
@@ -112,6 +117,7 @@ namespace Tools_Starfield
             starfield.Draw(spriteBatch);
             playerSprite.Draw(spriteBatch);
             enemyManager.draw(spriteBatch);
+            explosionManager.draw(spriteBatch);
             spriteBatch.Draw(playerSprite.Texture, playerSprite.Position, playerSprite.SourceRect, Color.White);
             spriteBatch.End();
 
