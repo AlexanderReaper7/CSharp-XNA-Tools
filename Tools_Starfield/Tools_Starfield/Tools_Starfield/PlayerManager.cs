@@ -32,6 +32,16 @@ namespace Tools_Starfield
         private float minShotTimer = 0.2f;
         public Shooting PlayerShotManager;
         Rectangle screenBounds;
+        // Player vars
+        public int CollisionRadius;
+        public bool Destroyed;
+        public int LivesRemaining = 3;
+        private int playerRadius = 15;
+
+        public Vector2 Center
+        {
+            get { return position + new Vector2(spriteWidth / 2, spriteHeight / 2); }
+        }
 
         public Vector2 Position
         {
@@ -66,6 +76,7 @@ namespace Tools_Starfield
             this.screenBounds = screenBounds;
 
             PlayerShotManager = new Shooting(texture, new Rectangle(0, 300, 5, 5), 4, 2, 250f, screenBounds);
+            CollisionRadius = playerRadius;
         }
 
         public void HandleSpriteMovement(GameTime gametime)
@@ -237,7 +248,10 @@ namespace Tools_Starfield
         public void update(GameTime gameTime)
         {
             PlayerShotManager.Update(gameTime);
+            if (!Destroyed)
+            {
             shotTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+            }
         }
 
         public void Draw(SpriteBatch spritebatch)

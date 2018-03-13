@@ -22,6 +22,7 @@ namespace Tools_Starfield
         PlayerManager playerSprite;
         Texture2D mixedSprites;
         EnemyManager enemyManager;
+        CollisionsManager collisionManager;
 
         public Game1()
         {
@@ -61,6 +62,8 @@ namespace Tools_Starfield
             playerSprite.Position = new Vector2(400, 300);
             // 
             enemyManager = new EnemyManager(mixedSprites, new Rectangle(0, 200, 50, 50), 6, playerSprite, screenBounds);
+            //
+            collisionManager = new CollisionsManager(playerSprite, enemyManager);
         }
 
         /// <summary>
@@ -92,6 +95,7 @@ namespace Tools_Starfield
             playerSprite.HandleSpriteMovement(gameTime);
             playerSprite.update(gameTime);
             enemyManager.Update(gameTime);
+            collisionManager.CheckCollisions();
 
             base.Update(gameTime);
         }
