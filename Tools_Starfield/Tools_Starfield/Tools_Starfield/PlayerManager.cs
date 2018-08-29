@@ -75,7 +75,7 @@ namespace Tools_Starfield
             this.spriteHeight = spriteHeight;
             this.screenBounds = screenBounds;
 
-            PlayerShotManager = new Shooting(texture, new Rectangle(0, 300, 5, 5), 4, 2, 250f, screenBounds);
+            PlayerShotManager = new Shooting(texture, new Rectangle(0, 300, 5, 5), 0, 2, 250f, screenBounds);
             CollisionRadius = playerRadius;
         }
 

@@ -13,10 +13,10 @@ namespace Tools_Starfield
         private ExplosionManager explosionManager;
         private Vector2 offScreen = new Vector2(-500, -500);
 
-        public CollisionsManager(PlayerManager playerSprite, EnemyManager enemyManager/*, ExplosionManager explosionManager*/)
+        public CollisionsManager(PlayerManager playerSprite, EnemyManager enemyManager, ExplosionManager explosionManager)
         {
             this.playerManager = playerSprite;
-            //this.explosionManager = explosionManager;
+            this.explosionManager = explosionManager;
             this.enemyManager = enemyManager;
         }
 
@@ -31,7 +31,7 @@ namespace Tools_Starfield
                         shot.Position = offScreen;
                         enemy.Destroyed = true;
 
-                        //explosionManager.AddExplosion(enemy.EnemySprite.Center, enemy.EnemySprite.Velocity / 10);
+                        explosionManager.AddExplosion(enemy.EnemySprite.Center, enemy.EnemySprite.Velocity / 10);
                     }
                 }
             }
@@ -46,7 +46,7 @@ namespace Tools_Starfield
                     shot.Position = offScreen;
                     playerManager.Destroyed = true;
 
-                    //explosionManager.AddExplosion(playerManager.Center, Vector2.Zero);
+                    explosionManager.AddExplosion(playerManager.Center, Vector2.Zero);
                 }
             }
         }
@@ -58,10 +58,10 @@ namespace Tools_Starfield
                 if (enemy.EnemySprite.IsCircleColliding(playerManager.Position, playerManager.CollisionRadius))
                 {
                     enemy.Destroyed = true;
-                    //explosionManager.AddExplosion(enemy.EnemySprite.Center, enemy.EnemySprite.Velocity / 10);
+                    explosionManager.AddExplosion(enemy.EnemySprite.Center, enemy.EnemySprite.Velocity / 10);
 
                     playerManager.Destroyed = true;
-                    //explosionManager.AddExplosion(playerManager.Center, Vector2.Zero);
+                    explosionManager.AddExplosion(playerManager.Center, Vector2.Zero);
                 }
             }
         }

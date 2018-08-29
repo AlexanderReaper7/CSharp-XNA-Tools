@@ -52,7 +52,7 @@ namespace Tools_Starfield
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             // Star texture(alias)
-            mixedSprites = Content.Load<Texture2D>(@"SpriteSheet");
+            mixedSprites = Content.Load<Texture2D>(@"mixed");
             // Window size
             Rectangle screenBounds = new Rectangle(0, 0, this.Window.ClientBounds.Width, this.Window.ClientBounds.Height);
             // Star particles
@@ -61,10 +61,11 @@ namespace Tools_Starfield
             playerSprite = new PlayerManager(Content.Load<Texture2D>(@"SpriteSheet"), 1, 32, 48, screenBounds);
             // Player starting position
             playerSprite.Position = new Vector2(400, 300);
-            // 
-            enemyManager = new EnemyManager(mixedSprites, new Rectangle(1, 32, 48, 50), 6, playerSprite, screenBounds);
-            //
-            collisionManager = new CollisionsManager(playerSprite, enemyManager);
+            // Enemy sprite
+            enemyManager = new EnemyManager(mixedSprites, new Rectangle(0, 200, 50, 50), 6, playerSprite, screenBounds);
+            // Collisions
+            collisionManager = new CollisionsManager(playerSprite, enemyManager, explosionManager);
+            // Explosion particle sprite
             explosionManager = new ExplosionManager(mixedSprites, new Rectangle(0, 100, 50, 50), 3, new Rectangle(0, 450, 2, 2));
         }
 
