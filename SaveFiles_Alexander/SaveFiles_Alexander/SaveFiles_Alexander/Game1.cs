@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
@@ -10,6 +11,8 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using System.Xml.Serialization;
 using System.IO;
+using System.Runtime.InteropServices;
+
 //using Microsoft.Xna.Framework.Storage; TODO
 
 namespace SaveFiles_Alexander
@@ -23,13 +26,13 @@ namespace SaveFiles_Alexander
         SpriteBatch spriteBatch;
 
         public readonly string FileName = "save.dat";
-
+        private SpriteFont Font;
         /// <summary>
         /// Current player Score
         /// </summary>
         public int PlayerScore = 30;
 
-        public Tuple<string, int>[] Scorelist = { };
+        public string PlayerName;
 
 
         /// <summary>
@@ -60,6 +63,7 @@ namespace SaveFiles_Alexander
         /// </summary>
         protected override void Initialize()
         {
+            PlayerName = GetRandomString();
 
             base.Initialize();
         }
@@ -73,7 +77,7 @@ namespace SaveFiles_Alexander
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // TODO: use this.Content to load your game content here
+            Font = Content.Load<SpriteFont>(@"Font");
         }
 
         /// <summary>
@@ -95,7 +99,6 @@ namespace SaveFiles_Alexander
             GamePadState gamepad = GamePad.GetState(PlayerIndex.One);
             KeyboardState keyboard = Keyboard.GetState();
             //back or escape exits the game
-
             if (gamepad.Buttons.Back == ButtonState.Pressed || keyboard.IsKeyDown(Keys.End))
                 this.Exit();
 
@@ -106,65 +109,51 @@ namespace SaveFiles_Alexander
                 graphics.ApplyChanges();
             }
 
-            // if gamestate is Menu
-            if (gameState == GameStates.Menu)
+            switch (gameState)
             {
-                // Gamestate is menu
-
-                // Up Arrow key to add 1 to score
-                if (Keyboard.GetState().IsKeyDown(Keys.Up))
+                case GameStates.Menu:
                 {
-                    PlayerScore++;
-                }
-                // Down Arrow key to subtract 1 to score
-                if (Keyboard.GetState().IsKeyDown(Keys.Down))
-                {
-                    PlayerScore--;
-                }
-
-                // H to open scoreboard 
-                if (Keyboard.GetState().IsKeyDown(Keys.H))
-                {
-                    // Set gamestate to scoreboard
-                    gameState = GameStates.Scoreboard;
-
-                    // Load data from file
-                    SaveData data = LoadData(FileName);
-
-                    // Move data into an array of tuples
-                    for (int i = 0; i < data.Count; i++)
+                    // Up Arrow key to add 1 to score
+                    if (Keyboard.GetState().IsKeyDown(Keys.Up))
                     {
-                        Scorelist[i] = new Tuple<string, int>(data.PlayerName[i], data.Score[i]);
+                        PlayerScore++;
+                    }
+                    // Down Arrow key to subtract 1 to score
+                    if (Keyboard.GetState().IsKeyDown(Keys.Down))
+                    {
+                        PlayerScore--;
+                    }
+                    // H to open scoreboard 
+                    if (Keyboard.GetState().IsKeyDown(Keys.H))
+                    {
+                        // Set gamestate to scoreboard
+                        gameState = GameStates.Scoreboard;
+                    }
+                    // S to save to file
+                    if (Keyboard.GetState().IsKeyDown(Keys.S))
+                    {
+                       Console.WriteLine("S");
+                       SaveHighScore();
                     }
 
-                    Scorelist = HighScoreSort(Scorelist);
-
-                    Console.WriteLine(Scorelist.ToString());
+                    break;
                 }
-
-                // S to save to file
-                if (Keyboard.GetState().IsKeyDown(Keys.S))
+                case GameStates.Scoreboard:
                 {
-                    if (!File.Exists(FileName))
+                    // M to open menu
+                    if (Keyboard.GetState().IsKeyDown(Keys.M))
                     {
-                        SaveData data = new SaveData(1);
-                        data.PlayerName[0] = "Kalle";
-                        data.Score[0] = 0;
-
-                        DoSave(data, FileName);
+                        // Set gameState to Menu
+                        gameState = GameStates.Menu;
                     }
+
+                    break;
+
                 }
-            }
-            else
-            {
-                // Gamestate is Scoreboard
-                // M to open menu
-                if (Keyboard.GetState().IsKeyDown(Keys.M))
+                default:
                 {
-                    // Set gameState to Menu
-                    gameState = GameStates.Menu;
+                    throw new ArgumentOutOfRangeException();
                 }
-                
             }
             base.Update(gameTime);
         }
@@ -228,8 +217,16 @@ namespace SaveFiles_Alexander
             return data;
         }
 
+        public static string GetRandomString()
+        {
+            string path = Path.GetRandomFileName();
+            path = path.Replace(".", ""); // Remove period.
+            return path;
+        }
+
         private void SaveHighScore()
         {
+                Console.WriteLine("Saved highscore");
             SaveData data = LoadData(FileName);
 
             int scoreIndex = -1;
@@ -250,8 +247,8 @@ namespace SaveFiles_Alexander
                 }
 
                 data.Score[scoreIndex] = PlayerScore;
-
-               
+                data.PlayerName[scoreIndex] = PlayerName;
+                DoSave(data, FileName);
             }
         }
 
@@ -283,7 +280,31 @@ namespace SaveFiles_Alexander
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+
+            spriteBatch.Begin();
+
+            switch (gameState)
+            {
+                case GameStates.Scoreboard:
+                    GraphicsDevice.Clear(Color.Black);
+
+                    for (var index = 0; index < LoadData(FileName).Count; index++)
+                    {
+                        // Draw Name and Score
+                        spriteBatch.DrawString(Font, LoadData(FileName).PlayerName[index] + " " + LoadData(FileName).Score[index], new Vector2(1, Font.MeasureString(LoadData(FileName).PlayerName[index]).Y + 3), Color.White);
+                    }
+
+                    break;
+                case GameStates.Menu:
+                    GraphicsDevice.Clear(Color.HotPink);
+
+                    // Draw Name and Score
+                    spriteBatch.DrawString(Font, PlayerName + " " + PlayerScore, Vector2.One, Color.White);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+            spriteBatch.End();
 
             base.Draw(gameTime);
         }
