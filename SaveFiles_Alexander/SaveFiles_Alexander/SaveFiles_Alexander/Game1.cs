@@ -33,7 +33,10 @@ namespace SaveFiles_Alexander
         public int PlayerScore = 30;
 
         public string PlayerName;
-
+        /// <summary>
+        /// boolean used to stop S key spam
+        /// </summary>
+        bool isSUp;
 
         /// <summary>
         /// Possible states for game
@@ -129,11 +132,17 @@ namespace SaveFiles_Alexander
                         // Set gamestate to scoreboard
                         gameState = GameStates.Scoreboard;
                     }
-                    // S to save to file
-                    if (Keyboard.GetState().IsKeyDown(Keys.S))
+                    // Check if S is up to enable 
+                    if (keyboard.IsKeyUp(Keys.S))
                     {
-                       Console.WriteLine("S");
-                       SaveHighScore();
+                        isSUp = true;
+                    }
+                    // S to save to file
+                    if (Keyboard.GetState().IsKeyDown(Keys.S) && isSUp)
+                    {
+
+                        isSUp = false;
+                        SaveHighScore();
                     }
 
                     break;
@@ -217,6 +226,10 @@ namespace SaveFiles_Alexander
             return data;
         }
 
+        /// <summary>
+        /// Public domain method found on the interwebz
+        /// </summary>
+        /// <returns>Random string of 8 characters</returns>
         public static string GetRandomString()
         {
             string path = Path.GetRandomFileName();
@@ -224,6 +237,9 @@ namespace SaveFiles_Alexander
             return path;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         private void SaveHighScore()
         {
                 Console.WriteLine("Saved highscore");
@@ -250,28 +266,6 @@ namespace SaveFiles_Alexander
                 data.PlayerName[scoreIndex] = PlayerName;
                 DoSave(data, FileName);
             }
-        }
-
-        /// <summary>
-        /// HighScoreSort method 
-        /// </summary>
-        /// <param name="inputArray"></param>
-        /// <returns></returns>
-        static Tuple<string, int>[] HighScoreSort(Tuple<string, int>[] inputArray)
-        {
-            for (int i = 0; i < inputArray.Length - 1; i++)
-            {
-                for (int j = i + 1; j > 0; j--)
-                {
-                    if (inputArray[j - 1].Item2 > inputArray[j].Item2)
-                    {
-                        Tuple<string,int> temp = inputArray[j - 1];
-                        inputArray[j - 1] = inputArray[j];
-                        inputArray[j] = temp;
-                    }
-                }
-            }
-            return inputArray;
         }
 
         /// <summary>
