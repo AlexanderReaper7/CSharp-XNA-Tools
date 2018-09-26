@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tools_DynamicLights", "Tools_Normalmap\Tools_Normalmap\Tools_DynamicLights.csproj", "{92894977-2FC3-444B-B974-CEAB8E0ED105}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tools_DynamicLightsContents", "Tools_Normalmap\Tools_NormalmapContent\Tools_DynamicLightsContents.contentproj", "{0B535A08-72B9-411C-9F37-1C1AE3CA96DA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{92894977-2FC3-444B-B974-CEAB8E0ED105}.Debug|x86.ActiveCfg = Debug|x86
+		{92894977-2FC3-444B-B974-CEAB8E0ED105}.Debug|x86.Build.0 = Debug|x86
+		{92894977-2FC3-444B-B974-CEAB8E0ED105}.Release|x86.ActiveCfg = Release|x86
+		{92894977-2FC3-444B-B974-CEAB8E0ED105}.Release|x86.Build.0 = Release|x86
+		{0B535A08-72B9-411C-9F37-1C1AE3CA96DA}.Debug|x86.ActiveCfg = Debug|x86
+		{0B535A08-72B9-411C-9F37-1C1AE3CA96DA}.Release|x86.ActiveCfg = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
