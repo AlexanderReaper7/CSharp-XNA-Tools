@@ -182,7 +182,6 @@ namespace Tool_files
                 }
 
                 data.Score[scoreIndex] = PlayerScore;
-                // TODO savedate
             }
         }
 
