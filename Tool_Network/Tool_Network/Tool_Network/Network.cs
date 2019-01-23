@@ -24,10 +24,15 @@ namespace Tool_Network
         private static bool? _isConnected;
         private static bool? _successfullySentMail;
 
+        /// <summary>
+        /// Loads textures and sprite fonts
+        /// </summary>
+        /// <param name="content"></param>
         public static void LoadContent(ContentManager content)
         {
+            // Load font
             _font = content.Load<SpriteFont>(@"Font");
-
+            // Load Icon Textures
             _networkNullIcon = content.Load<Texture2D>(@"NetworkNull");
             _networkOnIcon = content.Load<Texture2D>(@"NetworkOn");
             _networkOffIcon = content.Load<Texture2D>(@"NetworkOff");
@@ -38,11 +43,13 @@ namespace Tool_Network
             // Press space to get network connectivity status
             if (Keyboard.GetState().IsKeyDown(Keys.Space))
             {
+                // Get network availability and store result in _isConnected, overwriting the previous null value.
                 _isConnected = NetworkInterface.GetIsNetworkAvailable();               
             }
             // Press Enter to send test mail if message was not to sent yet
             if (Keyboard.GetState().IsKeyDown(Keys.Enter) && _successfullySentMail == null)
             {
+                // Send a mail and store success/fail
                 _successfullySentMail = SendTestMail();
             }
         }
@@ -58,11 +65,11 @@ namespace Tool_Network
                 // Create smtp client
                 SmtpClient client = new SmtpClient("smtp.gmail.com")
                 {
-                    Credentials = new NetworkCredential("alexander.ohberg.a1@gmail.com", ""),
+                    Credentials = new NetworkCredential("alexander.oberg@elev.ga.lbs.se", "AMNX;3141;jkl!;"),
                     EnableSsl = true
                 };
                 // Create message
-                MailMessage message = new MailMessage("alexander.ohberg.a1@gmail.com", "stativetroller7@gmail.com")
+                MailMessage message = new MailMessage("alexander.oberg@elev.ga.lbs.se", "stativetroller7@gmail.com")
                 {
                     Subject = "Test", Body = "This is a test mail"
                 };
@@ -80,22 +87,25 @@ namespace Tool_Network
         }
 
         /// <summary>
-        /// Draws network elements
+        /// Draw icon and text to window
         /// </summary>
         /// <param name="spriteBatch"></param>
         public static void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Begin();
-            // Draw tool tip for network connection check
+
+            // Draw tooltip for network connection check
             spriteBatch.DrawString(_font,
                 "Press space to check for a network connection",
-                new Vector2(200f),
+                new Vector2(1f, 200f),
                 Color.White);
+
             // Draw connection icon
             spriteBatch.Draw(_isConnected == null ? _networkNullIcon : _isConnected == true ? _networkOnIcon : _networkOffIcon,
                 Vector2.One,
                 Color.White);
-            // Draw 
+
+            // Draw Email tooltip and result
             spriteBatch.DrawString(_font,
                 _successfullySentMail == null ? "Press Enter to send test mail" : _successfullySentMail == true ? "Mail successfully sent!" : "Error when attempting to send mail, check console for error.",
                 new Vector2(1, 100),
