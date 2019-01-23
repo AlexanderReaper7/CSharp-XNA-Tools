@@ -21,6 +21,9 @@ namespace Tools_3D_CustomModel
         SpriteBatch spriteBatch;
 
         private List<CustomModel> models = new List<CustomModel>();
+        private Camera camera;
+
+        private MouseState lastMouseState;
 
         public Game1()
         {
@@ -67,6 +70,12 @@ namespace Tools_3D_CustomModel
 
                 }
             }
+
+            models.Add(new CustomModel(boxModel, Vector3.Zero, Vector3.Zero, new Vector3(100f), GraphicsDevice));
+
+            camera = new ArcBallCamera(Vector3.Zero, 0, 0, 0, MathHelper.PiOver2, 1200, 1000, 2000, GraphicsDevice);
+
+            lastMouseState = Mouse.GetState();
         }
 
         /// <summary>
@@ -89,9 +98,34 @@ namespace Tools_3D_CustomModel
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
-            // TODO: Add your update logic here
+            UpdateCamera(gameTime);
 
             base.Update(gameTime);
+        }
+
+        public void UpdateCamera(GameTime gameTime)
+        {
+            MouseState mouseState = Mouse.GetState();
+            KeyboardState keyState = Keyboard.GetState();
+
+            // Calculate how much the camera should rotate
+            float deltaX = lastMouseState.X - mouseState.X;
+            float deltaY = lastMouseState.Y - mouseState.Y;
+
+            // Rotate camera
+            ((ArcBallCamera)camera).Rotate(deltaX * 0.01f, deltaY * 0.01f);
+
+            // Calculate scroll wheel 
+            float scrollDelta = lastMouseState.ScrollWheelValue - (float) mouseState.ScrollWheelValue;
+
+            // Move camera
+            ((ArcBallCamera)camera).Move(scrollDelta);
+
+            // Update camera
+            camera.Update();
+
+            // Update lastMouseState
+            lastMouseState = mouseState;
         }
 
         /// <summary>
@@ -107,9 +141,10 @@ namespace Tools_3D_CustomModel
 
             foreach (CustomModel model in models)
             {
-                model.Draw(viewMatrix, projectionMatrix);
+                model.Draw(camera.View, camera.Projection);
             }
 
+            
             base.Draw(gameTime);
         }
     }
