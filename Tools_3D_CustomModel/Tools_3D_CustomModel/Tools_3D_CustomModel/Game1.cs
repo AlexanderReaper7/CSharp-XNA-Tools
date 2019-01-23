@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Tools_3D_CustomModel
 {
@@ -18,6 +19,8 @@ namespace Tools_3D_CustomModel
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+
+        private List<CustomModel> models = new List<CustomModel>();
 
         public Game1()
         {
@@ -46,8 +49,24 @@ namespace Tools_3D_CustomModel
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            Model boxModel = Content.Load<Model>(@"test");
 
-            // TODO: use this.Content to load your game content here
+            for (int y = 0; y < 2; y++)
+            {
+                for (int x = 0; x < 3; x++)
+                {
+                    Vector3 position = new Vector3(-200 + x * 200, -200 + y * 300, 0);
+
+                    models.Add( new CustomModel(
+                        boxModel,
+                        position,
+                        new Vector3(0, MathHelper.ToRadians(90) * (y * 3 + x), 0),
+                        new Vector3(10f),
+                        GraphicsDevice));
+
+
+                }
+            }
         }
 
         /// <summary>
@@ -83,7 +102,13 @@ namespace Tools_3D_CustomModel
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
+            Matrix viewMatrix = Matrix.CreateLookAt(new Vector3(100, 300, 600), new Vector3(0, 50, 0), Vector3.Up);
+            Matrix projectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45), GraphicsDevice.Viewport.AspectRatio, 0.1f, 10000.0f);
+
+            foreach (CustomModel model in models)
+            {
+                model.Draw(viewMatrix, projectionMatrix);
+            }
 
             base.Draw(gameTime);
         }
