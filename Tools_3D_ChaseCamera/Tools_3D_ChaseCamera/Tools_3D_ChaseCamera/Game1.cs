@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Tools_3D_CustomModel
+namespace Tools_3D_ChaseCamera
 {
     /// <summary>
     /// This is the main type for your game
@@ -21,6 +21,7 @@ namespace Tools_3D_CustomModel
         SpriteBatch spriteBatch;
 
         private List<CustomModel> models = new List<CustomModel>();
+        private Camera camera;
 
         public Game1()
         {
@@ -50,24 +51,18 @@ namespace Tools_3D_CustomModel
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             Model boxModel = Content.Load<Model>(@"test");
+            Model groundModel = Content.Load<Model>(@"Ground/Ground");
 
-            // Add six models to models
-            for (int y = 0; y < 2; y++)
-            {
-                for (int x = 0; x < 3; x++)
-                {
-                    Vector3 position = new Vector3(-200 + x * 200, -200 + y * 300, 0);
+            models.Add( new CustomModel(
+                boxModel,
+                Vector3.Zero, 
+                Vector3.Zero, 
+                new Vector3(100f),
+                GraphicsDevice));
 
-                    models.Add( new CustomModel(
-                        boxModel,
-                        position,
-                        new Vector3(0, MathHelper.ToRadians(90) * (y * 3 + x), 0),
-                        new Vector3(10f),
-                        GraphicsDevice));
+            models.Add(new CustomModel(groundModel, Vector3.Zero, Vector3.Zero, Vector3.One, GraphicsDevice));
 
-
-                }
-            }
+            camera = new ChaseCamera(new Vector3(1000f), Vector3.Zero, Vector3.Zero, GraphicsDevice);
         }
 
         /// <summary>
@@ -87,11 +82,53 @@ namespace Tools_3D_CustomModel
         protected override void Update(GameTime gameTime)
         {
             // Allows the game to exit
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.End))
                 this.Exit();
 
+            UpdateModel(gameTime);
+            UpdateCamera(gameTime);
 
             base.Update(gameTime);
+        }
+
+        private void UpdateModel(GameTime gameTime)
+        {
+            KeyboardState keyState = Keyboard.GetState();
+
+            Vector3 rotChange = Vector3.Zero;
+
+            // Rotate object
+            if (keyState.IsKeyDown(Keys.Q)) { rotChange += new Vector3(1, 0, 0); }
+            if (keyState.IsKeyDown(Keys.E)) { rotChange += new Vector3(-1, 0, 0); }
+            if (keyState.IsKeyDown(Keys.A)) { rotChange += new Vector3(0, 1, 0); }
+            if (keyState.IsKeyDown(Keys.D)) { rotChange += new Vector3(0, -1, 0); }
+
+            models[0].Rotation += rotChange * .025f;
+
+            // Object should only move when space is held down
+            if (keyState.IsKeyUp(Keys.S))
+            {
+                // Calculate what direction the object should move in
+                Matrix rotation = Matrix.CreateFromYawPitchRoll(models[0].Rotation.Y, models[0].Rotation.X, models[0].Rotation.Z);
+                // Move object in direction given by rotation matrix
+                models[0].Position += Vector3.Transform(Vector3.Forward, rotation * (float)gameTime.ElapsedGameTime.TotalMilliseconds * 4);
+            }
+
+            if (keyState.IsKeyUp(Keys.W))
+            {
+                // Calculate what direction the object should move in
+                Matrix rotation = Matrix.CreateFromYawPitchRoll(models[0].Rotation.Y, models[0].Rotation.X, models[0].Rotation.Z);
+                // Move object in direction given by rotation matrix
+                models[0].Position += Vector3.Transform(Vector3.Backward, rotation * (float)gameTime.ElapsedGameTime.TotalMilliseconds * 4);
+
+            }
+        }
+
+        private void UpdateCamera(GameTime gameTime)
+        {
+            ((ChaseCamera)camera).Move(models[0].Position, models[0].Rotation);
+
+            camera.Update();
         }
 
 
@@ -110,7 +147,7 @@ namespace Tools_3D_CustomModel
             // Draw every model in models with a view and projection matrix
             foreach (CustomModel model in models)
             {
-                model.Draw(viewMatrix, projectionMatrix);
+                model.Draw(camera.View, camera.Projection);
             }
 
             

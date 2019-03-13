@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Design;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Tools_3D_CustomModel
+namespace Tools_3D_FreeCamera
 {
     class CustomModel
     {

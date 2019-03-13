@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Design;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Tools_3D_CustomModel
+namespace Tools_MultipleCamera
 {
     class CustomModel
     {
@@ -19,7 +19,14 @@ namespace Tools_3D_CustomModel
         private Matrix[] modelTransforms;
         private GraphicsDevice graphicsDevice;
 
-
+        /// <summary>
+        /// instantiates a new Custom model
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="position"></param>
+        /// <param name="rotation"></param>
+        /// <param name="scale"></param>
+        /// <param name="graphicsDevice"></param>
         public CustomModel(Model model, Vector3 position, Vector3 rotation, Vector3 scale,
             GraphicsDevice graphicsDevice)
         {

@@ -5,7 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Tools_3D_CustomModel
+namespace ArcBallCamera
 {
     public class ArcBallCamera : Camera
     {

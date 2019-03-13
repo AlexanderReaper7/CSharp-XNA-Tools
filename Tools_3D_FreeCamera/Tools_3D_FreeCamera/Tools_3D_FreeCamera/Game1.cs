@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Tools_3D_CustomModel
+namespace Tools_3D_FreeCamera
 {
     /// <summary>
     /// This is the main type for your game
@@ -22,10 +22,16 @@ namespace Tools_3D_CustomModel
 
         private List<CustomModel> models = new List<CustomModel>();
 
+        private Camera camera;
+
+        private MouseState lastMouseState;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            IsFixedTimeStep = false;
+        
         }
 
         /// <summary>
@@ -36,7 +42,11 @@ namespace Tools_3D_CustomModel
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
+            graphics.PreferredBackBufferWidth = 1920;
+            graphics.PreferredBackBufferHeight = 1080;
+            graphics.ApplyChanges();
+
+            
 
             base.Initialize();
         }
@@ -50,7 +60,7 @@ namespace Tools_3D_CustomModel
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             Model boxModel = Content.Load<Model>(@"test");
-
+            Model groundModel = Content.Load<Model>(@"ground");
             // Add six models to models
             for (int y = 0; y < 2; y++)
             {
@@ -68,6 +78,14 @@ namespace Tools_3D_CustomModel
 
                 }
             }
+
+            models.Add(new CustomModel(boxModel, Vector3.Zero, Vector3.Zero, Vector3.One, GraphicsDevice));
+
+            models.Add(new CustomModel(groundModel, Vector3.Zero, Vector3.Zero, Vector3.One, GraphicsDevice));
+
+            camera = new FreeCamera(GraphicsDevice,MathHelper.ToRadians(153), MathHelper.ToRadians(5), new Vector3(1000, 1000, -2000));
+
+            lastMouseState = Mouse.GetState();
         }
 
         /// <summary>
@@ -87,12 +105,51 @@ namespace Tools_3D_CustomModel
         protected override void Update(GameTime gameTime)
         {
             // Allows the game to exit
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.End))
                 this.Exit();
+            //Fullscreen
+            if (Keyboard.GetState().IsKeyDown(Keys.F))
+            {
+                graphics.IsFullScreen = !graphics.IsFullScreen;
+                graphics.ApplyChanges();
+            }
 
+
+            UpdateCamera(gameTime);
 
             base.Update(gameTime);
         }
+
+        private void UpdateCamera(GameTime gameTime)
+        {
+            MouseState mouseState = Mouse.GetState();
+            KeyboardState keyState = Keyboard.GetState();
+
+            // Calculate how much the camera should rotate
+            float deltaX = lastMouseState.X - mouseState.X;
+            float deltaY = lastMouseState.Y - mouseState.Y;
+
+            // Rotate camera
+            ((FreeCamera)camera).Rotate(deltaX * 0.01f, deltaY * 0.01f);
+
+            Vector3 translation = Vector3.Zero;
+
+            if (keyState.IsKeyDown(Keys.W)) translation += Vector3.Forward * 2f;
+            if (keyState.IsKeyDown(Keys.S)) translation += Vector3.Backward;
+            if (keyState.IsKeyDown(Keys.A)) translation += Vector3.Left;
+            if (keyState.IsKeyDown(Keys.D)) translation += Vector3.Right;
+            if (keyState.IsKeyDown(Keys.Space)) translation += Vector3.Up;
+
+            // Move camera
+            ((FreeCamera)camera).Move(translation);
+
+            // Update camera
+            camera.Update();
+
+            // Update lastMouseState
+            lastMouseState = mouseState;
+        }
+
 
 
         /// <summary>
@@ -110,7 +167,7 @@ namespace Tools_3D_CustomModel
             // Draw every model in models with a view and projection matrix
             foreach (CustomModel model in models)
             {
-                model.Draw(viewMatrix, projectionMatrix);
+                model.Draw(camera.View, camera.Projection);
             }
 
             

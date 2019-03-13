@@ -1,20 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <ProjectGuid>{F5E37F2E-ABA1-4068-80BB-169466881066}</ProjectGuid>
+    <ProjectGuid>{E5FE1689-C196-412C-8001-12C69325CBCE}</ProjectGuid>
     <ProjectTypeGuids>{6D335F3A-9D43-41b4-9D22-F6F17C4BE596};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Tools_3D_CustomModel</RootNamespace>
-    <AssemblyName>Tools_3D_CustomModel</AssemblyName>
+    <RootNamespace>Tools_MultipleCamera</RootNamespace>
+    <AssemblyName>Tools_MultipleCamera</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <XnaFrameworkVersion>v4.0</XnaFrameworkVersion>
     <XnaPlatform>Windows</XnaPlatform>
     <XnaProfile>Reach</XnaProfile>
-    <XnaCrossPlatformGroupID>6b17dd64-6b1d-49d5-a163-ead5db2d9c00</XnaCrossPlatformGroupID>
+    <XnaCrossPlatformGroupID>eaddd9ec-e41c-46eb-ab0f-e9627ac6adae</XnaCrossPlatformGroupID>
     <XnaOutputType>Game</XnaOutputType>
     <ApplicationIcon>Game.ico</ApplicationIcon>
     <Thumbnail>GameThumbnail.png</Thumbnail>
@@ -72,8 +72,11 @@
     <Reference Include="System.Net" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ArcBallCamera.cs" />
     <Compile Include="Camera.cs" />
+    <Compile Include="ChaseCamera.cs" />
     <Compile Include="CustomModel.cs" />
+    <Compile Include="FreeCamera.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />
@@ -85,8 +88,8 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Tools_3D_CustomModelContent\Tools_3D_CustomModelContent.contentproj">
-      <Name>Tools_3D_CustomModelContent</Name>
+    <ProjectReference Include="..\Tools_MultipleCameraContent\Tools_MultipleCameraContent.contentproj">
+      <Name>Tools_MultipleCameraContent</Name>
       <XnaReferenceType>Content</XnaReferenceType>
     </ProjectReference>
   </ItemGroup>

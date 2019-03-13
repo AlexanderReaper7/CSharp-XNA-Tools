@@ -1,20 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <ProjectGuid>{F5E37F2E-ABA1-4068-80BB-169466881066}</ProjectGuid>
+    <ProjectGuid>{531B0D8A-8165-4A7A-B28F-12EFA3E4C5C3}</ProjectGuid>
     <ProjectTypeGuids>{6D335F3A-9D43-41b4-9D22-F6F17C4BE596};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Tools_3D_CustomModel</RootNamespace>
-    <AssemblyName>Tools_3D_CustomModel</AssemblyName>
+    <RootNamespace>Tools_3D_FreeCamera</RootNamespace>
+    <AssemblyName>Tools_3D_FreeCamera</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <XnaFrameworkVersion>v4.0</XnaFrameworkVersion>
     <XnaPlatform>Windows</XnaPlatform>
-    <XnaProfile>Reach</XnaProfile>
-    <XnaCrossPlatformGroupID>6b17dd64-6b1d-49d5-a163-ead5db2d9c00</XnaCrossPlatformGroupID>
+    <XnaProfile>HiDef</XnaProfile>
+    <XnaCrossPlatformGroupID>285ece00-dd16-49aa-b183-386d6d9a19b5</XnaCrossPlatformGroupID>
     <XnaOutputType>Game</XnaOutputType>
     <ApplicationIcon>Game.ico</ApplicationIcon>
     <Thumbnail>GameThumbnail.png</Thumbnail>
@@ -74,6 +74,7 @@
   <ItemGroup>
     <Compile Include="Camera.cs" />
     <Compile Include="CustomModel.cs" />
+    <Compile Include="FreeCamera.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />
@@ -85,8 +86,8 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Tools_3D_CustomModelContent\Tools_3D_CustomModelContent.contentproj">
-      <Name>Tools_3D_CustomModelContent</Name>
+    <ProjectReference Include="..\Tools_3D_FreeCameraContent\Tools_3D_FreeCameraContent.contentproj">
+      <Name>Tools_3D_FreeCameraContent</Name>
       <XnaReferenceType>Content</XnaReferenceType>
     </ProjectReference>
   </ItemGroup>

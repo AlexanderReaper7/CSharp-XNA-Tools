@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 
-namespace Tools_DynamicLights
+namespace ArcBallCamera
 {
     /// <summary>
     /// This is the main type for your game
@@ -19,16 +19,10 @@ namespace Tools_DynamicLights
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        /// <summary>
-        /// Brickwall texture
-        /// </summary>
-        private Texture2D background;
-        /// <summary>
-        /// Brickwall normalmap
-        /// </summary>
-        private Texture2D backgroundNormals;
+        private List<CustomModel> models = new List<CustomModel>();
+        private Camera camera;
 
-        private DynamicLight dynamicLight;
+        private MouseState lastMouseState;
 
         public Game1()
         {
@@ -44,11 +38,7 @@ namespace Tools_DynamicLights
         /// </summary>
         protected override void Initialize()
         {
-            // Change resolution to 1280x720
-            graphics.PreferredBackBufferWidth = 1920;
-            graphics.PreferredBackBufferHeight = 1080;
-            graphics.ApplyChanges();
-
+            // TODO: Add your initialization logic here
             base.Initialize();
         }
 
@@ -56,18 +46,16 @@ namespace Tools_DynamicLights
         /// LoadContent will be called once per game and is the place to load
         /// all of your content.
         /// </summary>
-        protected override void LoadContent() 
+        protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            Model boxModel = Content.Load<Model>(@"test");
 
-            // Load brickwall texture
-            background = Content.Load<Texture2D>(@"Brickwall_Texture");
-            // Load brickwall normalmap
-            backgroundNormals = Content.Load<Texture2D>(@"Brickwall_Normalmap");
+            models.Add(new CustomModel(boxModel, Vector3.Zero, Vector3.Zero, new Vector3(100f), GraphicsDevice));
 
-            dynamicLight = new DynamicLight();
-            dynamicLight.LoadContent(Content, GraphicsDevice);
+            camera = new ArcBallCamera(Vector3.Zero, 0, 0, 0, MathHelper.PiOver2, 1200, 1000, 2000, GraphicsDevice);
+            lastMouseState = Mouse.GetState();
         }
 
         /// <summary>
@@ -87,46 +75,38 @@ namespace Tools_DynamicLights
         protected override void Update(GameTime gameTime)
         {
             // Allows the game to exit
-            GamePadState gamepad = GamePad.GetState(PlayerIndex.One);
-            KeyboardState keyboard = Keyboard.GetState();
-            //back or escape exits the game
-            if (gamepad.Buttons.Back == ButtonState.Pressed || keyboard.IsKeyDown(Keys.End))
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
-            //F to toggle fullscreen
-            if (Keyboard.GetState().IsKeyDown(Keys.F))
-            {
-                graphics.IsFullScreen = !graphics.IsFullScreen;
-                graphics.ApplyChanges();
-            }
-
-            // Update mouse
-            MouseState mouse = Mouse.GetState();
-            dynamicLight.lights[0].Position.X = mouse.X;
-            dynamicLight.lights[0].Position.Y = mouse.Y;
-
+            UpdateCamera(gameTime);
 
             base.Update(gameTime);
         }
 
-        private void DrawColorMap()
+        public void UpdateCamera(GameTime gameTime)
         {
-            spriteBatch.Begin();
+            MouseState mouseState = Mouse.GetState();
+            KeyboardState keyState = Keyboard.GetState();
 
-            spriteBatch.Draw(background, Vector2.Zero, Color.White);
+            // Calculate how much the camera should rotate
+            float deltaX = lastMouseState.X - mouseState.X;
+            float deltaY = lastMouseState.Y - mouseState.Y;
 
-            spriteBatch.End();
+            // Rotate camera
+            ((ArcBallCamera)camera).Rotate(deltaX * 0.01f, deltaY * 0.01f);
+
+            // Calculate scroll wheel 
+            float scrollDelta = lastMouseState.ScrollWheelValue - (float) mouseState.ScrollWheelValue;
+
+            // Move camera
+            ((ArcBallCamera)camera).Move(scrollDelta);
+
+            // Update camera
+            camera.Update();
+
+            // Update lastMouseState
+            lastMouseState = mouseState;
         }
-
-        private void DrawNormalMap()
-        {
-            spriteBatch.Begin();
-
-            spriteBatch.Draw(backgroundNormals, Vector2.Zero, Color.White);
-
-            spriteBatch.End();
-        }
-
 
         /// <summary>
         /// This is called when the game should draw itself.
@@ -136,26 +116,15 @@ namespace Tools_DynamicLights
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // Set the render targets
-            dynamicLight.DrawColorMap(GraphicsDevice);
-            DrawColorMap();
+            Matrix viewMatrix = Matrix.CreateLookAt(new Vector3(100, 300, 600), new Vector3(0, 50, 0), Vector3.Up);
+            Matrix projectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45), GraphicsDevice.Viewport.AspectRatio, 0.1f, 10000.0f);
 
-            // Clear all render targets
-            GraphicsDevice.SetRenderTarget(null);
+            foreach (CustomModel model in models)
+            {
+                model.Draw(camera.View, camera.Projection);
+            }
 
-            // Set the render targets
-            dynamicLight.DrawNormalMap(GraphicsDevice);
-            DrawNormalMap();
-
-            // Clear all render targets
-            GraphicsDevice.SetRenderTarget(null);
-
-            dynamicLight.GenerateShadowMap(GraphicsDevice);
-
-            GraphicsDevice.Clear(Color.Black);
-
-            dynamicLight.DrawCombinedMaps(spriteBatch);
-
+            
             base.Draw(gameTime);
         }
     }
