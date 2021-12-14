@@ -28,7 +28,7 @@ namespace ArcBallCamera
         public Vector3 Target { get; set; }
 
         public ArcBallCamera(Vector3 target, float rotationX, float rotationY, float minRotationY, float maxRotationY, float distance, float minDistance, float maxDistance, GraphicsDevice graphicsDevice)
-            : base(graphicsDevice)
+            : base(graphicsDevice, ProjectionMatrixType.Orthographic)
         {
             RotationX = rotationX;
             MinRotationY = minRotationY;

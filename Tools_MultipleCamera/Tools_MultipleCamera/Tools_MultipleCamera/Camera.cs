@@ -36,6 +36,8 @@ namespace Tools_MultipleCamera
             }
         }
 
+        public Vector3 Position { get; set; }
+
         /// <summary>
         /// frustum of camera view
         /// </summary>

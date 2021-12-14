@@ -53,9 +53,9 @@ namespace Tools_DynamicLights
 
             Vertices = new VertexPositionColorTexture[4];
 
-            Vertices[0] = new VertexPositionColorTexture(new Vector3(-1, 1, 0), Color.Red, new Vector2(0, 0));
-            Vertices[1] = new VertexPositionColorTexture(new Vector3(1, 1, 0), Color.Blue, new Vector2(1, 0));
-            Vertices[2] = new VertexPositionColorTexture(new Vector3(-1, -1, 0), Color.Yellow, new Vector2(0, 1));
+            Vertices[0] = new VertexPositionColorTexture(new Vector3(-1, 1, 0), Color.White, new Vector2(0, 0));
+            Vertices[1] = new VertexPositionColorTexture(new Vector3(1, 1, 0), Color.White, new Vector2(1, 0));
+            Vertices[2] = new VertexPositionColorTexture(new Vector3(-1, -1, 0), Color.White, new Vector2(0, 1));
             Vertices[3] = new VertexPositionColorTexture(new Vector3(1, -1, 0), Color.White, new Vector2(1, 1));
             VertexBuffer = new VertexBuffer(graphicsDevice, typeof(VertexPositionColorTexture), Vertices.Length, BufferUsage.None);
             VertexBuffer.SetData(Vertices);

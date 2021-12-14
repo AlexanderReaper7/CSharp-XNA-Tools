@@ -37,7 +37,6 @@ namespace Tools_MultipleCamera
         /// </summary>
         public float MaxDistance { get; set; }
 
-        public Vector3 Position { get; set; }
 
         /// <summary>
         /// Coordinate the camera should face

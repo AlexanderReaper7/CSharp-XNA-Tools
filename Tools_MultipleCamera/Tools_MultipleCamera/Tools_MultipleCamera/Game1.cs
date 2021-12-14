@@ -104,6 +104,18 @@ namespace Tools_MultipleCamera
             // Ground
             models.Add(new CustomModel(groundModel, Vector3.Zero, Vector3.Zero, Vector3.One, GraphicsDevice));
 
+            Effect simpleEffect = Content.Load<Effect>("SimpleEffect");
+
+            models[0].SetModelEffect(simpleEffect, true);
+            models[1].SetModelEffect(simpleEffect, true);
+
+            LightingMaterial mat = new LightingMaterial();
+
+            mat.AmbientColor = Color.Red.ToVector3() * .15f;
+            mat.LightColor = Color.White.ToVector3() * .85f;
+
+            models[0].Material = mat;
+            models[1].Material = mat;
 
             // Load cameras
             _chaseCamera = new ChaseCamera(new Vector3(1000f), Vector3.Zero, Vector3.Zero, GraphicsDevice);
@@ -292,7 +304,7 @@ namespace Tools_MultipleCamera
             // Draw every model in models with the current camera´s view and projection matrix
             foreach (CustomModel model in models)
             {
-                model.Draw(CurrentCamera.View, CurrentCamera.Projection);
+                model.Draw(CurrentCamera.View, CurrentCamera.Projection, CurrentCamera.Position);
             }
             
             base.Draw(gameTime);

@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 
-namespace ArcBallCamera
+namespace Tools_3D_Lighting_Test
 {
     /// <summary>
     /// This is the main type for your game
@@ -18,11 +18,6 @@ namespace ArcBallCamera
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-
-        private List<CustomModel> models = new List<CustomModel>();
-        private Camera camera;
-
-        private MouseState lastMouseState;
 
         public Game1()
         {
@@ -39,6 +34,7 @@ namespace ArcBallCamera
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+
             base.Initialize();
         }
 
@@ -50,12 +46,8 @@ namespace ArcBallCamera
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            Model boxModel = Content.Load<Model>(@"test");
 
-            models.Add(new CustomModel(boxModel, Vector3.Zero, Vector3.Zero, new Vector3(12f), GraphicsDevice));
-
-            camera = new IsometricCamera(Vector3.Zero, 1200, 1000, 2000, GraphicsDevice);
-            lastMouseState = Mouse.GetState();
+            // TODO: use this.Content to load your game content here
         }
 
         /// <summary>
@@ -78,34 +70,9 @@ namespace ArcBallCamera
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
-            camera.Update();
+            // TODO: Add your update logic here
 
             base.Update(gameTime);
-        }
-
-        public void UpdateCamera(GameTime gameTime)
-        {
-            MouseState mouseState = Mouse.GetState();
-            KeyboardState keyState = Keyboard.GetState();
-
-            // Calculate how much the camera should rotate
-            float deltaX = lastMouseState.X - mouseState.X;
-            float deltaY = lastMouseState.Y - mouseState.Y;
-
-            // Rotate camera
-            ((ArcBallCamera)camera).Rotate(deltaX * 0.01f, deltaY * 0.01f);
-
-            // Calculate scroll wheel 
-            float scrollDelta = lastMouseState.ScrollWheelValue - (float) mouseState.ScrollWheelValue;
-
-            // Move camera
-            ((ArcBallCamera)camera).Move(scrollDelta);
-
-            // Update camera
-            camera.Update();
-
-            // Update lastMouseState
-            lastMouseState = mouseState;
         }
 
         /// <summary>
@@ -116,15 +83,8 @@ namespace ArcBallCamera
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            Matrix viewMatrix = Matrix.CreateLookAt(new Vector3(100, 300, 600), new Vector3(0, 50, 0), Vector3.Up);
-            Matrix projectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45), GraphicsDevice.Viewport.AspectRatio, 0.1f, 10000.0f);
+            // TODO: Add your drawing code here
 
-            foreach (CustomModel model in models)
-            {
-                model.Draw(camera.View, camera.Projection);
-            }
-
-            
             base.Draw(gameTime);
         }
     }

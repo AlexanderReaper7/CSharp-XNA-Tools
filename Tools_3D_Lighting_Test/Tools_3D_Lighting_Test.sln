@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tools_3D_Lighting_Test", "Tools_3D_Lighting_Test\Tools_3D_Lighting_Test\Tools_3D_Lighting_Test.csproj", "{90C0AE36-CBFF-4F16-BAF0-23CB3102B00C}"
+EndProject
+Project("{96E2B04D-8817-42C6-938A-82C39BA4D311}") = "Tools_3D_Lighting_TestContent", "Tools_3D_Lighting_Test\Tools_3D_Lighting_TestContent\Tools_3D_Lighting_TestContent.contentproj", "{58713E44-7D48-4908-95BC-C157289F39F4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{90C0AE36-CBFF-4F16-BAF0-23CB3102B00C}.Debug|x86.ActiveCfg = Debug|x86
+		{90C0AE36-CBFF-4F16-BAF0-23CB3102B00C}.Debug|x86.Build.0 = Debug|x86
+		{90C0AE36-CBFF-4F16-BAF0-23CB3102B00C}.Release|x86.ActiveCfg = Release|x86
+		{90C0AE36-CBFF-4F16-BAF0-23CB3102B00C}.Release|x86.Build.0 = Release|x86
+		{58713E44-7D48-4908-95BC-C157289F39F4}.Debug|x86.ActiveCfg = Debug|x86
+		{58713E44-7D48-4908-95BC-C157289F39F4}.Release|x86.ActiveCfg = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

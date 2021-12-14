@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace ArcBallCamera
+namespace Tools_3D_Lighting_Test
 {
     public abstract class Camera
     {
@@ -38,40 +34,20 @@ namespace ArcBallCamera
 
         protected GraphicsDevice GraphicsDevice { get; set; }
 
-        public Camera(GraphicsDevice graphicsDevice, ProjectionMatrixType pmt)
+        public Camera(GraphicsDevice graphicsDevice)
         {
             GraphicsDevice = graphicsDevice;
-            switch (pmt)
-            {
-                case ProjectionMatrixType.Perspective:
-                    GeneratePerspectiveProjectionMatrix();
-                    break;
-                case ProjectionMatrixType.Orthographic:
-                    GenerateOrthographicProjectionMatrix();
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(pmt), pmt, null);
-            }
+
+            GeneratePerspectiveProjectionMatrix(MathHelper.PiOver4);
         }
 
-        public enum ProjectionMatrixType
-        {
-            Perspective,
-            Orthographic
-        }
-
-        protected void GeneratePerspectiveProjectionMatrix()
+        private void GeneratePerspectiveProjectionMatrix(float fieldOfView)
         {
             PresentationParameters pp = GraphicsDevice.PresentationParameters;
 
             float aspectRatio = (float) pp.BackBufferWidth / (float) pp.BackBufferHeight;
 
-            Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4, aspectRatio, 0.1f, 1000000.0f);
-        }
-
-        protected void GenerateOrthographicProjectionMatrix()
-        {
-            Projection = Matrix.CreateOrthographic(GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height, 0.1f, 1000000.0f);
+            Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45), aspectRatio, 0.1f, 1000000.0f);
         }
 
         public virtual void Update()

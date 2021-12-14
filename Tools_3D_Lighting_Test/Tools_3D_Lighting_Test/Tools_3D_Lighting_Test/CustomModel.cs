@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Tools_MultipleCamera
+namespace Tools_3D_Lighting_Test
 {
     class CustomModel
     {
@@ -87,7 +87,7 @@ namespace Tools_MultipleCamera
             else if (val is Texture2D) effect.Parameters[param].SetValue((Texture2D)val);
         }
 
-        public void SetModelEffect(Effect effect, bool copyEffect)
+        private void SetModelEffect(Effect effect, bool copyEffect)
         {
             foreach (ModelMesh mesh in Model.Meshes)
             {

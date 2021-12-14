@@ -9,7 +9,7 @@ float4 lightColor;
 float lightRadius;
 float specularStrength;
 
-Texture NormalMap;
+texture NormalMap;
 sampler NormalMapSampler = sampler_state {
 	texture = <NormalMap>;
 	magfilter = LINEAR;
@@ -20,7 +20,7 @@ sampler NormalMapSampler = sampler_state {
 	
 };
 
-Texture ColorMap;
+texture ColorMap;
 sampler ColorMapSampler = sampler_state {
 	texture = <ColorMap>;
 	magfilter = LINEAR;

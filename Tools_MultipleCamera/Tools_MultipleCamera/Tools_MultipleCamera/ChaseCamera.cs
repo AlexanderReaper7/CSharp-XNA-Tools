@@ -10,8 +10,6 @@ namespace Tools_MultipleCamera
     class ChaseCamera : Camera
     {
 
-        public Vector3 Position { get; private set; }
-
         public Vector3 CameraRotation { get; set; }
 
         /// <summary>
